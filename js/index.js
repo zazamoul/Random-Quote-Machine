@@ -8,33 +8,39 @@ function getColor() {
                 url: "http://www.colr.org/json/scheme/random",
                 cache: false,
                 dataType: "text",
-                success: function (data) {
+                success: function (data)
+                {
                     var colorObj = JSON.parse(data);
                     arrayColor = colorObj["schemes"][0]["colors"];
-                 
-                }
+                    randomColor();
+                    console.log(arrayColor);
+                 }                
             });
-    
-};
+    };
 
 function randomColor()
     {
+    console.log(arrayColor);
     if (arrayColor.length > 0)
         {
             do {
                 var i = Math.trunc(Math.random() * arrayColor.length);
+                console.log(i);
+                console.log("arrayColor[i] = ", arrayColor[i], "actualColor = ", actualColor, "différents ? ",(arrayColor[i] == actualColor));
                }
             while (arrayColor[i] == actualColor)
         }
     actualColor = arrayColor[i];
-    $(".jumbotron").css('background-color', actualColor);
+    console.log("#" + actualColor);
+    $('.jumbotron').css('background-color', "#" + actualColor);
     //$(".jumbotron").style("background-color: :" + "#4404D4");}
     
     };
 
 
 function getQuote() {
-            randomColor();
+
+
             $.ajax
             ({
                 url: "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
@@ -47,8 +53,8 @@ function getQuote() {
 
                     $('#quote-author').html(authorDisplay);
                     $('#quote-content').html(contentDisplay);
-                
-
+                    
+                    getColor();
 
 
                     // If the Source is available, use it. Otherwise hide it.
@@ -72,7 +78,7 @@ function truncate(strAcouper) {
     };
 
 $(document).ready(function () {
-        getColor();
+        
 
         getQuote();
         
